@@ -2,6 +2,7 @@
 #define SHADER_H
 
 #include <string>
+#include <glm/glm.hpp>
 #include <glad/glad.h>
 
 class Shader {
@@ -12,6 +13,9 @@ public:
     ~Shader();
 
     void use() const;
+    
+    // Set uniform matrix
+    void setMat4(const std::string& name, const glm::mat4& mat) const;
     
 private:
     std::string loadShaderSource(const char* filePath);
