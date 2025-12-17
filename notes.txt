@@ -1,0 +1,15 @@
+run:
+
+g++ src/main.cpp src/glad.c -Iinclude -lglfw -lGL -o app && ./app
+
+
+OR
+
+cd build
+
+(optional sometimes)
+cmake ..
+
+(after each change)
+make
+./app

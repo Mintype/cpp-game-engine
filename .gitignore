@@ -1,0 +1,35 @@
+# Build directories
+build/
+cmake_build_debug/
+cmake_build_release/
+out/
+
+# CMake
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+*.cmake
+
+# Compiled objects
+*.o
+*.a
+*.so
+*.dylib
+*.dll
+*.exe
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Dependencies
+include/glad/
+include/KHR/
+
+# Executable
+app
