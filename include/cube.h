@@ -2,15 +2,17 @@
 #define CUBE_H
 
 #include "mesh.h"
+#include "transform.h"
 
 class Cube {
 public:
     Mesh mesh;
+    Transform transform;
 
     Cube();
 
 private:
-    // 8 unique vertices for a unit cube
+    // 8 unique vertices for a unit cube (no duplicates)
     static const float vertices[];
     static const unsigned int vertexCount;
     

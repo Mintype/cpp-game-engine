@@ -46,7 +46,7 @@ const unsigned int Cube::indices[] = {
 
 const unsigned int Cube::indexCount = 36;
 
-// Constructor - initializes the cube mesh with indexed vertices
-Cube::Cube() : mesh(vertices, vertexCount, indices, indexCount) {
+// Constructor - initializes the cube mesh with indexed vertices and the transform
+Cube::Cube() : mesh(vertices, vertexCount, indices, indexCount), transform() {
     // Mesh constructor handles all GPU setup
 }
