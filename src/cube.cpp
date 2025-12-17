@@ -42,44 +42,48 @@ const float Cube::vertices[] = {
 
 const unsigned int Cube::vertexCount = 24;
 
-// Texture coordinates for each vertex (u, v) from 0.0 to 1.0
-// Each face has its own set of vertices with full 0-1 texture coverage
+// Texture coordinates for each vertex (u, v)
+// The texture is a 4x3 grid: each cell is 0.25 wide (1/4) and 0.333 tall (1/3)
+// Grid layout:
+//   nothing-top-nothing-nothing     (row 0, y: 0.0-0.333)
+//   side-side-side-side            (row 1, y: 0.333-0.667)
+//   nothing-bottom-nothing-nothing  (row 2, y: 0.667-1.0)
 const float Cube::texCoords[] = {
-    // Back face
-    0.0f, 0.0f,
-    1.0f, 0.0f,
-    1.0f, 1.0f,
-    0.0f, 1.0f,
+    // Back face - uses side texture (column 0, row 1)
+    0.0f, 0.667f,
+    0.25f, 0.667f,
+    0.25f, 0.333f,
+    0.0f, 0.333f,
     
-    // Front face
-    0.0f, 0.0f,
-    1.0f, 0.0f,
-    1.0f, 1.0f,
-    0.0f, 1.0f,
+    // Front face - uses side texture (column 1, row 1)
+    0.25f, 0.667f,
+    0.5f, 0.667f,
+    0.5f, 0.333f,
+    0.25f, 0.333f,
     
-    // Left face
-    0.0f, 0.0f,
-    1.0f, 0.0f,
-    1.0f, 1.0f,
-    0.0f, 1.0f,
+    // Left face - uses side texture (column 2, row 1)
+    0.5f, 0.667f,
+    0.75f, 0.667f,
+    0.75f, 0.333f,
+    0.5f, 0.333f,
     
-    // Right face
-    0.0f, 0.0f,
-    1.0f, 0.0f,
-    1.0f, 1.0f,
-    0.0f, 1.0f,
+    // Right face - uses side texture (column 3, row 1)
+    0.75f, 0.667f,
+    1.0f, 0.667f,
+    1.0f, 0.333f,
+    0.75f, 0.333f,
     
-    // Bottom face
-    0.0f, 0.0f,
-    1.0f, 0.0f,
-    1.0f, 1.0f,
-    0.0f, 1.0f,
+    // Bottom face - uses bottom texture (column 1, row 2)
+    0.25f, 0.667f,
+    0.5f, 0.667f,
+    0.5f, 1.0f,
+    0.25f, 1.0f,
     
-    // Top face
-    0.0f, 0.0f,
-    1.0f, 0.0f,
-    1.0f, 1.0f,
-    0.0f, 1.0f,
+    // Top face - uses top texture (column 1, row 0)
+    0.25f, 0.0f,
+    0.5f, 0.0f,
+    0.5f, 0.333f,
+    0.25f, 0.333f,
 };
 
 // 36 indices define 12 triangles (6 faces with 2 triangles each)
@@ -113,11 +117,10 @@ const unsigned int Cube::indices[] = {
 const unsigned int Cube::indexCount = 36;
 
 // Constructor - initializes the cube mesh with indexed vertices, texture coordinates, and the transform
-Cube::Cube() : mesh(vertices, vertexCount, texCoords, indices, indexCount), transform() {
+Cube::Cube(const char* texturePath) : mesh(vertices, vertexCount, texCoords, indices, indexCount), transform() {
     // Mesh constructor handles all GPU setup including texture coordinates
-    // Load texture - this assumes you have a texture file named "container.png" or similar
-    // in the working directory or a textures folder
-    texture = new Texture("./textures/grass_block.png");
+    // Load texture from the provided path
+    texture = new Texture(texturePath);
 }
 
 // Destructor - clean up texture

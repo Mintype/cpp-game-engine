@@ -11,7 +11,7 @@ public:
     Transform transform;
     Texture* texture;
 
-    Cube();
+    Cube(const char* texturePath = "./textures/null_block.png");
     ~Cube();
 
 private:

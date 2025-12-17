@@ -13,7 +13,15 @@ Texture::Texture(const char* imagePath) : textureUnit(0) {
     // Check if image loaded successfully
     if (!data) {
         std::cerr << "ERROR: Failed to load texture at path: " << imagePath << std::endl;
-        return;
+
+        // Load NULL texture to avoid crashes
+        data = loadImage("./textures/null_block.png", width, height, channels);
+
+        // If NULL texture also fails, exit
+        if (!data) {
+            std::cerr << "ERROR: Failed to load fallback NULL texture." << std::endl;
+            return;
+        }
     }
 
     // Step 2: Create an OpenGL texture object
@@ -25,8 +33,8 @@ Texture::Texture(const char* imagePath) : textureUnit(0) {
     // Step 4: Configure texture properties BEFORE uploading data
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
     // Step 5: Determine the format of the image data
     // - channels == 3: RGB (red, green, blue) - 3 bytes per pixel
