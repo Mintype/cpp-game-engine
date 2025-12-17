@@ -18,6 +18,7 @@ Window::Window(int width, int height, const char* title)
     }
 
     glfwMakeContextCurrent(window);
+    glfwSwapInterval(1); // Enable vsync
     
     try {
         initGLAD();
