@@ -19,4 +19,12 @@ add_executable(app
 
 target_include_directories(app PRIVATE include)
 
+# Copy shaders to build directory after build
+add_custom_command(TARGET app POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_SOURCE_DIR}/shaders
+        ${CMAKE_BINARY_DIR}/shaders
+    COMMENT "Copying shaders to build directory"
+)
+
 target_link_libraries(app glfw GL)
