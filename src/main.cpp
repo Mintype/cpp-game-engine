@@ -2,36 +2,32 @@
 #include <iostream>
 #include "window.h"
 #include "shader.h"
-#include "mesh.h"
+#include "cube.h"
 
 int main() {
     try {
         // Create window
-        Window window(800, 600, "Triangle");
+        Window window(800, 600, "Cube");
 
         // Load shaders
         Shader shader("./shaders/vertex_shader.glsl", "./shaders/fragment_shader.glsl");
 
-        // Vertex data
-        float vertices[] = {
-             0.0f,  0.5f, 0.0f,  // top
-            -0.2f, -0.2f, 0.0f,  // bottom left
-             0.5f, -0.5f, 0.0f   // bottom right
-        };
-
-        // Create mesh
-        Mesh triangle(vertices, 3);
+        // Create cube
+        Cube cube;
 
         // Render loop
         while (!window.shouldClose()) {
             // Clear screen
             glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-            glClear(GL_COLOR_BUFFER_BIT);
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-            // Draw triangle
+            // Enable depth testing for 3D rendering
+            glEnable(GL_DEPTH_TEST);
+
+            // Draw cube
             shader.use();
-            triangle.bind();
-            triangle.draw();
+            cube.mesh.bind();
+            cube.mesh.draw();
 
             // Swap buffers and poll events
             window.swapBuffers();

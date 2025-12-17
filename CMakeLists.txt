@@ -14,6 +14,7 @@ add_executable(app
     src/window.cpp
     src/mesh.cpp
     src/transform.cpp
+    src/cube.cpp
 )
 
 target_include_directories(app PRIVATE include)
