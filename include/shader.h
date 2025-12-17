@@ -17,6 +17,9 @@ public:
     // Set uniform matrix
     void setMat4(const std::string& name, const glm::mat4& mat) const;
     
+    // Set uniform integer
+    void setInt(const std::string& name, int value) const;
+    
 private:
     std::string loadShaderSource(const char* filePath);
     void compileShaderProgram(const char* vertexSource, const char* fragmentSource);

@@ -16,7 +16,7 @@ int main() {
         Cube cube;
 
         // Apply initial transform to the cube
-        cube.transform.setPosition(glm::vec3(0.0f, 0.0f, -2.0f));
+        cube.transform.setPosition(glm::vec3(0.0f, 0.0f, -5.0f));
         cube.transform.setScale(glm::vec3(1.0f, 1.0f, 1.0f));
 
         // Create projection matrix (perspective view)
@@ -31,16 +31,23 @@ int main() {
             // Enable depth testing for 3D rendering
             glEnable(GL_DEPTH_TEST);
 
-            // Enable wireframe mode to outline triangles
-            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+            // Disable wireframe mode to see the texture (comment out to see wireframe)
+            // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
             // Rotate cube each frame
-            cube.transform.rotate(glm::vec3(1.0f, 1.0f, 0.0f), 0.1f);
+            cube.transform.rotate(glm::vec3(1.0f, 1.0f, 0.0f), 0.001f);
 
             // Draw cube with its transform
             shader.use();
             shader.setMat4("model", cube.transform.getModelMatrix());
             shader.setMat4("projection", projection);
+            
+            // Bind the texture before drawing
+            if (cube.texture) {
+                cube.texture->setTextureUnit(0);  // Use texture unit 0
+                shader.setInt("texture1", 0);      // Tell shader to sample from texture unit 0
+            }
+            
             cube.mesh.bind();
             cube.mesh.draw();
 

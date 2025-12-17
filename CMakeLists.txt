@@ -15,6 +15,7 @@ add_executable(app
     src/mesh.cpp
     src/transform.cpp
     src/cube.cpp
+    src/texture.cpp
 )
 
 target_include_directories(app PRIVATE include)
@@ -25,6 +26,14 @@ add_custom_command(TARGET app POST_BUILD
         ${CMAKE_SOURCE_DIR}/shaders
         ${CMAKE_BINARY_DIR}/shaders
     COMMENT "Copying shaders to build directory"
+)
+
+# Copy textures to build directory after build
+add_custom_command(TARGET app POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_SOURCE_DIR}/textures
+        ${CMAKE_BINARY_DIR}/textures
+    COMMENT "Copying textures to build directory"
 )
 
 target_link_libraries(app glfw GL)
