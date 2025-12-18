@@ -3,6 +3,7 @@
 #include "window.h"
 #include "shader.h"
 #include "cube.h"
+#include "camera.h"
 
 int main() {
     try {
@@ -11,6 +12,9 @@ int main() {
 
         // Load shaders
         Shader shader("./shaders/vertex_shader.glsl", "./shaders/fragment_shader.glsl");
+
+        // Create camera
+        Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 
         // Create cube and transform
         Cube cube("./textures/grass_block.png");
@@ -35,12 +39,21 @@ int main() {
             // Disable wireframe mode to see the texture (comment out to see wireframe)
             // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
+            // Simple camera controls
+            if (window.isKeyPressed(GLFW_KEY_W)) camera.moveForward(0.05f);
+            if (window.isKeyPressed(GLFW_KEY_S)) camera.moveForward(-0.05f);
+            if (window.isKeyPressed(GLFW_KEY_A)) camera.moveRight(-0.05f);
+            if (window.isKeyPressed(GLFW_KEY_D)) camera.moveRight(0.05f);
+            if (window.isKeyPressed(GLFW_KEY_SPACE)) camera.moveUp(0.05f);
+            if (window.isKeyPressed(GLFW_KEY_LEFT_CONTROL)) camera.moveUp(-0.05f);
+
             // Rotate cube each frame
             cube.transform.rotate(glm::vec3(1.0f, 1.0f, 0.0f), 0.001f);
 
             // Draw cube with its transform
             shader.use();
             shader.setMat4("model", cube.transform.getModelMatrix());
+            shader.setMat4("view", camera.getViewMatrix());
             shader.setMat4("projection", projection);
             
             // Bind the texture before drawing

@@ -14,6 +14,7 @@ public:
     void swapBuffers();
     bool shouldClose() const;
     void setShouldClose(bool value);
+    bool isKeyPressed(int key) const;
     
     GLFWwindow* getGLFWWindow() const;
     

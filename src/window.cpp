@@ -72,6 +72,10 @@ void Window::setShouldClose(bool value) {
     glfwSetWindowShouldClose(window, value);
 }
 
+bool Window::isKeyPressed(int key) const {
+    return glfwGetKey(window, key) == GLFW_PRESS;
+}
+
 GLFWwindow* Window::getGLFWWindow() const {
     return window;
 }

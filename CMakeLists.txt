@@ -16,6 +16,7 @@ add_executable(app
     src/transform.cpp
     src/cube.cpp
     src/texture.cpp
+    src/camera.cpp
 )
 
 target_include_directories(app PRIVATE include)
